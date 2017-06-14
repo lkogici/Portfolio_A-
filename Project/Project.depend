@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1496953703 source:d:\meus documentos\desktop\trabalho_encadeamento\project\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
+1497285306 source:d:\meus documentos\desktop\projeto\teste_a_star\project\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
