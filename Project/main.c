@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <math.h>
+#include "Lista.h"
 
 int objY = 10, objX = 10;
 
@@ -14,6 +15,8 @@ double calculaHeuristica(int cordX, int cordY){
 }
 
 int main(){
+    Lista* listaAberta = cria_lista();
+    Lista* listaFechada = cria_lista();
     srand(time(NULL));
     int mat[20][35], i, j;
 
@@ -24,10 +27,10 @@ int main(){
             }else{
                 if((i + j) <= 20 && i != 10 && j != 10)
                     mat[i][j] = rand()%100;
-                    if(mat[i][j] == 64)
-                        mat[i][j] = rand()%100;
-                    if(mat[i][j] == 90)
-                        mat[i][j] = rand()%100;
+                if(mat[i][j] == 64)
+                    mat[i][j] = rand()%100;
+                if(mat[i][j] == 90)
+                    mat[i][j] = rand()%100;
             }
         }
     }
@@ -66,5 +69,7 @@ int main(){
         Sleep(1500);
         system("cls");
     }
+    libera_lista(listaAberta);
+    libera_lista(listaFechada);
     return 0;
 }
