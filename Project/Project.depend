@@ -10,16 +10,17 @@
 	<windows.h>
 	<math.h>
 
-1497881535 source:c:\users\lucas\portfolio\project\main.c
+1499975343 source:c:\users\lucas\portfolio\project\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
 	<math.h>
+	"Lista.h"
 
-1499715113 source:c:\users\lucas\portfolio\project\lista.c
+1499974640 source:c:\users\lucas\portfolio\project\lista.c
 	<stdio.h>
 	<stdlib.h>
 	"Lista.h"
 
-1499713563 c:\users\lucas\portfolio\project\lista.h
+1499973840 c:\users\lucas\portfolio\project\lista.h
 
