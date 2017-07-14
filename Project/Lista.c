@@ -97,3 +97,17 @@ int lista_vazia(Lista* li){
 struct estrutura consulta_lista(Lista* li){
     return (*li)->dados;
 }
+
+int verificaIgual(Lista* li, int x, int y)
+{
+    if(li == NULL)
+        return 0;
+    Elemento* no = *li;
+    int aux = 0;
+    while(no != NULL){
+        if(no->dados.posicaoX == x && no->dados.posicaoY == y)
+            aux = 1;
+        no = no->prox;
+    }
+    return aux;
+}

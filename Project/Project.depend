@@ -24,3 +24,17 @@
 
 1499973840 c:\users\lucas\portfolio\project\lista.h
 
+1500067696 source:c:\users\richard peccin\desktop\portfolio_a--master\project\lista.c
+	<stdio.h>
+	<stdlib.h>
+	"Lista.h"
+
+1500067696 c:\users\richard peccin\desktop\portfolio_a--master\project\lista.h
+
+1500068368 source:c:\users\richard peccin\desktop\portfolio_a--master\project\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<math.h>
+	"Lista.h"
+

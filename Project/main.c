@@ -17,29 +17,29 @@ double calculaHeuristica(int cordX, int cordY){
     return result;
 }
 
-void adicionaAlcancaveis(int matriz[20][35], Lista* listaAberta){
-    if(personX + 1 < 20 && matriz[personX + 1][personY] != 'X'){
+void adicionaAlcancaveis(int matriz[20][35], Lista* listaAberta, Lista* listaFechada){
+    if(personX + 1 < 20 && matriz[personX + 1][personY] != 'X' && verificaIgual(listaAberta, personX + 1, personY) == 0 && verificaIgual(listaFechada, personX + 1, personY) == 0){
         auxiliar.custoF = calculaHeuristica(personX+1, personY) + matriz[personX][personY];
         auxiliar.posicaoX = personX + 1;
         auxiliar.posicaoY = personY;
         insere_lista_ordenada(listaAberta, auxiliar);
     }
 
-    if(personX - 1 >= 0 && matriz[personX - 1][personY] != 'X'){
+    if(personX - 1 >= 0 && matriz[personX - 1][personY] != 'X' && verificaIgual(listaAberta, personX - 1, personY) == 0 && verificaIgual(listaFechada, personX - 1, personY) == 0){
         auxiliar.custoF = calculaHeuristica(personX-1, personY) + matriz[personX][personY];
         auxiliar.posicaoX = personX - 1;
         auxiliar.posicaoY = personY;
         insere_lista_ordenada(listaAberta, auxiliar);
     }
 
-    if(personY + 1 < 35 && matriz[personX][personY + 1] != 'X'){
+    if(personY + 1 < 35 && matriz[personX][personY + 1] != 'X' && verificaIgual(listaAberta, personX, personY + 1) == 0 && verificaIgual(listaFechada, personX, personY + 1) == 0){
         auxiliar.custoF = calculaHeuristica(personX, personY+1) + matriz[personX][personY];
         auxiliar.posicaoX = personX;
         auxiliar.posicaoY = personY + 1;
         insere_lista_ordenada(listaAberta, auxiliar);
     }
 
-    if(personY - 1 >= 0 && matriz[personX][personY - 1] != 'X'){
+    if(personY - 1 >= 0 && matriz[personX][personY - 1] != 'X'  && verificaIgual(listaAberta, personX, personY - 1) == 0 && verificaIgual(listaFechada, personX, personY - 1) == 0){
         auxiliar.custoF = calculaHeuristica(personX, personY - 1) + matriz[personX][personY];
         auxiliar.posicaoX = personX;
         auxiliar.posicaoY = personY - 1;
@@ -53,14 +53,14 @@ int main(){
     srand(time(NULL));
 
     int mat[20][35], i, j;
-    personX = rand()%20;
-    personY = rand()%35;
+    personX = 17; //rand()%20;
+    personY = 32; //rand()%35;
     //Adiciona o ponto inicial a lista aberta
     auxiliar.posicaoX = personX;
     auxiliar.posicaoY = personY;
     auxiliar.custoF = calculaHeuristica(personX, personY);
     insere_lista_ordenada(listaAberta, auxiliar);
-
+    /*
     for(i = 0; i < 20; i++){
         for(j = 0; j < 35; j++){
             if(i == 0 || i == 19 || j == 0 || j == 34){
@@ -75,6 +75,23 @@ int main(){
             }
         }
     }
+    */
+
+    for(i = 0; i < 20; i++){
+        for(j = 0; j < 35; j++){
+            mat[i][j] = 88;
+        }
+    }
+    mat[17][32] = 0;
+    mat[16][32] = 0;
+    mat[15][32] = 0;
+    mat[14][32] = 0;
+    mat[18][32] = 0;
+    mat[18][31] = 0;
+    mat[18][30] = 0;
+    mat[18][29] = 0;
+    mat[18][28] = 0;
+
 
     mat[objX][objY] = 'Z';
 
@@ -141,7 +158,7 @@ int main(){
             }
         }
         Sleep(500);
-        adicionaAlcancaveis(mat, listaAberta);
+        adicionaAlcancaveis(mat, listaAberta, listaFechada);
         menorCusto = consulta_lista(listaAberta);
         remove_lista_inicio(listaAberta);
         insere_lista_ordenada(listaFechada, menorCusto);
