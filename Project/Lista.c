@@ -111,3 +111,14 @@ int verificaIgual(Lista* li, int x, int y)
     }
     return aux;
 }
+
+void imprimeLista(Lista* li){
+    Elemento *no = *li;
+    while(no != NULL){
+        printf("\n");
+        printf("Posicao do elemento: %d x %d \n", no->dados.posicaoX, no->dados.posicaoY);
+        printf("Custo F: %.2f \n", no->dados.custoF);
+        printf("\n");
+        no = no->prox;
+    }
+}

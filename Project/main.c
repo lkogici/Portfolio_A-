@@ -4,7 +4,7 @@
 #include <math.h>
 #include "Lista.h"
 
-int objY = 10, objX = 10, personX, personY;
+int objY, objX, personX, personY;
 
 struct estrutura auxiliar;
 struct estrutura menorCusto;
@@ -53,14 +53,16 @@ int main(){
     srand(time(NULL));
 
     int mat[20][35], i, j;
-    personX = 17; //rand()%20;
-    personY = 32; //rand()%35;
+    personX = rand()%20;
+    personY = rand()%35;
+    objX = rand()%20;
+    objY = rand()%35;
     //Adiciona o ponto inicial a lista aberta
     auxiliar.posicaoX = personX;
     auxiliar.posicaoY = personY;
     auxiliar.custoF = calculaHeuristica(personX, personY);
     insere_lista_ordenada(listaAberta, auxiliar);
-    /*
+
     for(i = 0; i < 20; i++){
         for(j = 0; j < 35; j++){
             if(i == 0 || i == 19 || j == 0 || j == 34){
@@ -75,55 +77,26 @@ int main(){
             }
         }
     }
-    */
 
-    for(i = 0; i < 20; i++){
+
+    /*for(i = 0; i < 20; i++){
         for(j = 0; j < 35; j++){
             mat[i][j] = 88;
         }
     }
-    mat[17][32] = 0;
-    mat[16][32] = 0;
-    mat[15][32] = 0;
-    mat[14][32] = 0;
-    mat[18][32] = 0;
-    mat[18][31] = 0;
-    mat[18][30] = 0;
-    mat[18][29] = 0;
-    mat[18][28] = 0;
-
+    mat[17][32] = 1;
+    mat[16][32] = 1;
+    mat[15][32] = 1;
+    mat[14][32] = 1;
+    mat[18][32] = 1;
+    mat[18][31] = 1;
+    mat[18][30] = 1;
+    mat[18][29] = 1;
+    mat[18][28] = 1;
+    */
 
     mat[objX][objY] = 'Z';
-
-    for(i = 0; i < 20; i++){
-            printf("\n");
-            for(j = 0; j < 35; j++){
-                if(mat[i][j] == 'X')
-                    printf("%c", mat[i][j]);
-                else if (mat[i][j] == 10)
-                    printf("%c", 'R');
-                else if (mat[i][j] == 4)
-                    printf("%c", 'A');
-                else if (mat[i][j] == 20)
-                    printf("%c", 'P');
-                else if (mat[i][j] == 64){
-                    if(i == 0 || i == 19 || j == 0 || j == 34){
-                        mat[i][j] = 'X';
-                        printf("%c", mat[i][j]);
-                    }else{
-                        if(mat[i][j] != 1){
-                            printf("%c", 64);
-                            mat[i][j] = 33;
-                        }
-                    }
-                }else if(mat[i][j] == 'Z'){
-                    printf("%c", mat[i][j]);
-                }else{
-                    printf(" ");
-                    mat[i][j] = 1;
-                }
-            }
-    }
+    int aux = 0;
 
     while((personX != objX && personY != objY) && !lista_vazia(listaAberta)){
         system("cls");
@@ -157,15 +130,25 @@ int main(){
                 }
             }
         }
+        printf("\n");
         Sleep(500);
+        if(aux == 0){
+            menorCusto = consulta_lista(listaAberta);
+            remove_lista_inicio(listaAberta);
+            insere_lista_ordenada(listaFechada, menorCusto);
+            aux = 1;
+        }
         adicionaAlcancaveis(mat, listaAberta, listaFechada);
         menorCusto = consulta_lista(listaAberta);
         remove_lista_inicio(listaAberta);
         insere_lista_ordenada(listaFechada, menorCusto);
         personX = menorCusto.posicaoX;
         personY = menorCusto.posicaoY;
+        adicionaAlcancaveis(mat, listaAberta, listaFechada);
     }
-
+    printf("Tamanho %d \n", tamanho_lista(listaAberta));
+    printf("Posicao personagem %d x %d \n", personX, personY);
+    printf("Posicao objetivo %d x %d \n", objX, objY);
     libera_lista(listaAberta);
     libera_lista(listaFechada);
     return 0;

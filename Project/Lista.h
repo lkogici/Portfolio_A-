@@ -22,3 +22,5 @@ int lista_cheia(Lista* li);
 struct estrutura consulta_lista(Lista* li);
 
 int verificaIgual(Lista* li, int x, int y);
+
+void imprimeLista(Lista* li);
