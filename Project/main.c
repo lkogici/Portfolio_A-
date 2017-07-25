@@ -82,6 +82,15 @@ int main(){
         }
     }
 
+    if(mat[personX][personY] == 'X'){
+        personX = rand()%20;
+        personY = rand()%35;
+    }
+
+    if(mat[objX][objY] == 'X'){
+        objX = rand()%20;
+        objY = rand()%35;
+    }
 
     /*for(i = 0; i < 20; i++){
         for(j = 0; j < 35; j++){
