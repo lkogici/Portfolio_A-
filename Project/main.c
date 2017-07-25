@@ -57,6 +57,10 @@ int main(){
     personY = rand()%35;
     objX = rand()%20;
     objY = rand()%35;
+    /*personX = 10;
+    personY = 16;
+    objX = 10;
+    objY = 20;*/
     //Adiciona o ponto inicial a lista aberta
     auxiliar.posicaoX = personX;
     auxiliar.posicaoY = personY;
@@ -70,9 +74,9 @@ int main(){
             }else{
                 if((i + j) <= 55 && i != 10 && j != 10)
                     mat[i][j] = rand()%100;
-                if(mat[i][j] == 64)
+                if(mat[i][j] == '@')
                     mat[i][j] = rand()%100;
-                if(mat[i][j] == 90)
+                if(mat[i][j] == 'Z')
                     mat[i][j] = rand()%100;
             }
         }
@@ -93,12 +97,56 @@ int main(){
     mat[18][30] = 1;
     mat[18][29] = 1;
     mat[18][28] = 1;
-    */
+    personX = 18;
+    personY = 32;*/
+
+    /*for(i = 0; i < 20; i++){
+        for(j = 0; j < 35; j++){
+            mat[i][j] = 'X';
+        }
+    }
+
+    mat[8][15] = 1;
+    mat[8][16] = 1;
+    mat[8][17] = 1;
+    mat[8][18] = 1;
+    mat[8][19] = 1;
+    mat[8][20] = 1;
+    mat[8][21] = 1;
+
+    mat[12][15] = 1;
+    mat[12][16] = 1;
+    mat[12][17] = 1;
+    mat[12][18] = 1;
+    mat[12][19] = 1;
+    mat[12][20] = 1;
+    mat[12][21] = 1;
+
+    mat[10][17] = 1;
+    mat[10][16] = 1;
+    mat[10][15] = 1;
+    mat[9][17] = 1;
+    mat[9][16] = 1;
+    mat[9][15] = 1;
+    mat[11][17] = 1;
+    mat[11][16] = 1;
+    mat[11][15] = 1;
+    mat[10][19] = 1;
+    mat[10][20] = 1;
+    mat[10][21] = 1;
+    mat[9][19] = 1;
+    mat[9][20] = 1;
+    mat[9][21] = 1;
+    mat[11][19] = 1;
+    mat[11][20] = 1;
+    mat[11][21] = 1;*/
 
     mat[objX][objY] = 'Z';
-    int aux = 0;
 
-    while((personX != objX && personY != objY) && !lista_vazia(listaAberta)){
+    int aux = 0, auxMapa = 1, fim = 0;
+
+    //while((personX != objX && personY != objY) && !lista_vazia(listaAberta)){
+    while(!fim && !lista_vazia(listaAberta)){
         system("cls");
         mat[personX][personY] = '@';
         for(i = 0; i < 20; i++){
@@ -112,14 +160,13 @@ int main(){
                     printf("%c", 'A');
                 else if (mat[i][j] == 20)
                     printf("%c", 'P');
-                else if (mat[i][j] == 64){
+                else if (mat[i][j] == '@'){
                     if(i == 0 || i == 19 || j == 0 || j == 34){
-                        mat[i][j] = 'X';
                         printf("%c", mat[i][j]);
                     }else{
                         if(mat[i][j] != 1){
                             printf("%c", 64);
-                            mat[i][j] = 33;
+                            mat[i][j] = auxMapa;
                         }
                     }
                 }else if(mat[i][j] == 'Z'){
@@ -144,7 +191,11 @@ int main(){
         insere_lista_ordenada(listaFechada, menorCusto);
         personX = menorCusto.posicaoX;
         personY = menorCusto.posicaoY;
+        auxMapa = mat[personX][personY];
         adicionaAlcancaveis(mat, listaAberta, listaFechada);
+        if(personX == objX)
+            if(personY == objY)
+                fim = 1;
     }
     printf("Tamanho %d \n", tamanho_lista(listaAberta));
     printf("Posicao personagem %d x %d \n", personX, personY);
