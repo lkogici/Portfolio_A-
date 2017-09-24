@@ -25,7 +25,7 @@ void adicionaAlcancaveis(int matriz[20][35], Lista* listaAberta, Lista* listaFec
         insere_lista_ordenada(listaAberta, auxiliar);
     }
 
-    if(personX - 1 >= 0 && matriz[personX - 1][personY] != 'X' && verificaIgual(listaAberta, personX - 1, personY) == 0 && verificaIgual(listaFechada, personX - 1, personY) == 0){
+    if(personX - 1 > 0 && matriz[personX - 1][personY] != 'X' && verificaIgual(listaAberta, personX - 1, personY) == 0 && verificaIgual(listaFechada, personX - 1, personY) == 0){
         auxiliar.custoF = calculaHeuristica(personX-1, personY) + matriz[personX][personY];
         auxiliar.posicaoX = personX - 1;
         auxiliar.posicaoY = personY;
@@ -39,11 +39,71 @@ void adicionaAlcancaveis(int matriz[20][35], Lista* listaAberta, Lista* listaFec
         insere_lista_ordenada(listaAberta, auxiliar);
     }
 
-    if(personY - 1 >= 0 && matriz[personX][personY - 1] != 'X'  && verificaIgual(listaAberta, personX, personY - 1) == 0 && verificaIgual(listaFechada, personX, personY - 1) == 0){
+    if(personY - 1 > 0 && matriz[personX][personY - 1] != 'X'  && verificaIgual(listaAberta, personX, personY - 1) == 0 && verificaIgual(listaFechada, personX, personY - 1) == 0){
         auxiliar.custoF = calculaHeuristica(personX, personY - 1) + matriz[personX][personY];
         auxiliar.posicaoX = personX;
         auxiliar.posicaoY = personY - 1;
         insere_lista_ordenada(listaAberta, auxiliar);
+    }
+}
+
+void imprimeCenario(int matriz[20][35], int i, int j, int auxMapa){
+    matriz[personX][personY] = '@';
+    for(i = 0; i < 20; i++){
+        printf("\n");
+        //Necessário verifica qual valor possui na matriz pois no intervalo [0,100]
+        //existem diversos valores não utilizados
+        for(j = 0; j < 35; j++){
+            if(matriz[i][j] == 'X')    //Caso seja uma bloco de parede
+                printf("%c", matriz[i][j]);
+            else if (matriz[i][j] == 10)   //Terreno ROCHOSO, custo 10
+                printf("%c", 'R');
+            else if (matriz[i][j] == 4)    //Terreno ARENOSO, custo 4
+                printf("%c", 'A');
+            else if (matriz[i][j] == 20)
+                printf("%c", 'P');      //Terreno PLANALTO, custo 20
+            else if (matriz[i][j] == '@'){ //Personagem
+                if(i == 0 || i == 19 || j == 0 || j == 34){
+                    printf("%c", matriz[i][j]);
+                }else{
+                    printf("%c", '@');
+                    matriz[i][j] = auxMapa;    //Apaga a posição anterior que o personagem já passou
+                }
+            }else if(matriz[i][j] == 'Z'){ //Objetivo
+                printf("%c", matriz[i][j]);
+            }else{
+                printf(" ");
+                //Na primeira impressão da matriz, padroniza todos os pontos
+                //que não tem terreno, objetivo ou personagem como custo 1
+                matriz[i][j] = 1;
+            }
+        }
+    }
+}
+
+void inicializaCenario(int matriz[20][35], int i, int j){
+    for(i = 0; i < 20; i++){
+        for(j = 0; j < 35; j++){
+            if(i == 0 || i == 19 || j == 0 || j == 34){
+                matriz[i][j] = 88;
+            }else{
+                if((i + j) <= 55 && i != 10 && j != 10)
+                    matriz[i][j] = rand()%100;
+                if(matriz[i][j] == '@')
+                    matriz[i][j] = rand()%100;
+                if(matriz[i][j] == 'Z')
+                    matriz[i][j] = rand()%100;
+            }
+        }
+    }
+    while(matriz[personX][personY] == 'X'){
+        personX = rand()%20;
+        personY = rand()%35;
+    }
+
+    while(matriz[objX][objY] == 'X'){
+        objX = rand()%20;
+        objY = rand()%35;
     }
 }
 
@@ -52,164 +112,78 @@ int main(){
     Lista* listaFechada = cria_lista();
     srand(time(NULL));
 
-    int mat[20][35], i, j;
+    int mat[20][35], i = 0, j = 0;
     personX = rand()%20;
     personY = rand()%35;
     objX = rand()%20;
     objY = rand()%35;
-    /*personX = 10;
-    personY = 16;
-    objX = 10;
-    objY = 20;*/
+
     //Adiciona o ponto inicial a lista aberta
+
     auxiliar.posicaoX = personX;
     auxiliar.posicaoY = personY;
     auxiliar.custoF = calculaHeuristica(personX, personY);
     insere_lista_ordenada(listaAberta, auxiliar);
 
-    for(i = 0; i < 20; i++){
-        for(j = 0; j < 35; j++){
-            if(i == 0 || i == 19 || j == 0 || j == 34){
-                mat[i][j] = 88;
-            }else{
-                if((i + j) <= 55 && i != 10 && j != 10)
-                    mat[i][j] = rand()%100;
-                if(mat[i][j] == '@')
-                    mat[i][j] = rand()%100;
-                if(mat[i][j] == 'Z')
-                    mat[i][j] = rand()%100;
-            }
-        }
-    }
-
-    if(mat[personX][personY] == 'X'){
-        personX = rand()%20;
-        personY = rand()%35;
-    }
-
-    if(mat[objX][objY] == 'X'){
-        objX = rand()%20;
-        objY = rand()%35;
-    }
-
-    /*for(i = 0; i < 20; i++){
-        for(j = 0; j < 35; j++){
-            mat[i][j] = 88;
-        }
-    }
-    mat[17][32] = 1;
-    mat[16][32] = 1;
-    mat[15][32] = 1;
-    mat[14][32] = 1;
-    mat[18][32] = 1;
-    mat[18][31] = 1;
-    mat[18][30] = 1;
-    mat[18][29] = 1;
-    mat[18][28] = 1;
-    personX = 18;
-    personY = 32;*/
-
-    /*for(i = 0; i < 20; i++){
-        for(j = 0; j < 35; j++){
-            mat[i][j] = 'X';
-        }
-    }
-
-    mat[8][15] = 1;
-    mat[8][16] = 1;
-    mat[8][17] = 1;
-    mat[8][18] = 1;
-    mat[8][19] = 1;
-    mat[8][20] = 1;
-    mat[8][21] = 1;
-
-    mat[12][15] = 1;
-    mat[12][16] = 1;
-    mat[12][17] = 1;
-    mat[12][18] = 1;
-    mat[12][19] = 1;
-    mat[12][20] = 1;
-    mat[12][21] = 1;
-
-    mat[10][17] = 1;
-    mat[10][16] = 1;
-    mat[10][15] = 1;
-    mat[9][17] = 1;
-    mat[9][16] = 1;
-    mat[9][15] = 1;
-    mat[11][17] = 1;
-    mat[11][16] = 1;
-    mat[11][15] = 1;
-    mat[10][19] = 1;
-    mat[10][20] = 1;
-    mat[10][21] = 1;
-    mat[9][19] = 1;
-    mat[9][20] = 1;
-    mat[9][21] = 1;
-    mat[11][19] = 1;
-    mat[11][20] = 1;
-    mat[11][21] = 1;*/
+    inicializaCenario(mat, i, j);
 
     mat[objX][objY] = 'Z';
 
     int aux = 0, auxMapa = 1, fim = 0;
 
-    //while((personX != objX && personY != objY) && !lista_vazia(listaAberta)){
     while(!fim && !lista_vazia(listaAberta)){
         system("cls");
-        mat[personX][personY] = '@';
-        for(i = 0; i < 20; i++){
-            printf("\n");
-            for(j = 0; j < 35; j++){
-                if(mat[i][j] == 'X')
-                    printf("%c", mat[i][j]);
-                else if (mat[i][j] == 10)
-                    printf("%c", 'R');
-                else if (mat[i][j] == 4)
-                    printf("%c", 'A');
-                else if (mat[i][j] == 20)
-                    printf("%c", 'P');
-                else if (mat[i][j] == '@'){
-                    if(i == 0 || i == 19 || j == 0 || j == 34){
-                        printf("%c", mat[i][j]);
-                    }else{
-                        if(mat[i][j] != 1){
-                            printf("%c", 64);
-                            mat[i][j] = auxMapa;
-                        }
-                    }
-                }else if(mat[i][j] == 'Z'){
-                    printf("%c", mat[i][j]);
-                }else{
-                    printf(" ");
-                    mat[i][j] = 1;
-                }
-            }
-        }
-        printf("\n");
-        Sleep(500);
+        imprimeCenario(mat,i,j,auxMapa);
+        Sleep(800);
+
+        //Como o while funciona enquanto a listaAberta não estiver vazia
+        //é necessário inserir um ponto antes de iniciar o while
+        //o ponto escolhido foi a posição inicial do personagem
+        //logo, é necessário retira-ló da lista aberta antes de começar
+        //pois antes não precisa ser verificado
+
         if(aux == 0){
             menorCusto = consulta_lista(listaAberta);
             remove_lista_inicio(listaAberta);
             insere_lista_ordenada(listaFechada, menorCusto);
             aux = 1;
         }
+        //Adiciona todos os possíveis estados a partir do ponto atual
+
         adicionaAlcancaveis(mat, listaAberta, listaFechada);
+
+        //Seleciona o passo de menor custo
+
         menorCusto = consulta_lista(listaAberta);
+
+        //Retira da lista aberta o passo de menor custo
+
         remove_lista_inicio(listaAberta);
+
+        //Itens verificados são adicionados a lista fechada,
+        //com o objetivo de que não sejam verificados duas vezes
+
         insere_lista_ordenada(listaFechada, menorCusto);
+
+        //Atualiza a posição do personagem com o novo passo
+
         personX = menorCusto.posicaoX;
         personY = menorCusto.posicaoY;
         auxMapa = mat[personX][personY];
-        adicionaAlcancaveis(mat, listaAberta, listaFechada);
+
+        //adicionaAlcancaveis(mat, listaAberta, listaFechada);
+
+        //Verifica se o objetivo foi atingido
+
         if(personX == objX)
-            if(personY == objY)
-                fim = 1;
+            if(personY == objY){
+                fim = 1; //Finaliza a busca por novos estados
+                system("cls");
+                imprimeCenario(mat,i,j,auxMapa);
+            }
     }
-    printf("Tamanho %d \n", tamanho_lista(listaAberta));
-    printf("Posicao personagem %d x %d \n", personX, personY);
-    printf("Posicao objetivo %d x %d \n", objX, objY);
     libera_lista(listaAberta);
     libera_lista(listaFechada);
+    getche();
     return 0;
 }

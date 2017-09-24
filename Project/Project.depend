@@ -38,3 +38,17 @@
 	<math.h>
 	"Lista.h"
 
+1506195818 source:c:\users\lkogi\portfolio\project\lista.c
+	<stdio.h>
+	<stdlib.h>
+	"Lista.h"
+
+1506195818 c:\users\lkogi\portfolio\project\lista.h
+
+1506203516 source:c:\users\lkogi\portfolio\project\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<math.h>
+	"Lista.h"
+
