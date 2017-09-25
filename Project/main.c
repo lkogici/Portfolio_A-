@@ -186,7 +186,6 @@ int main(){
     }
     printf("\n Objetivo encontrado\n");
     printf("    Pressione qualquer tecla para sair\n" );
-    printf("Branch Master \n");
     libera_lista(listaAberta);
     libera_lista(listaFechada);
     getche();
