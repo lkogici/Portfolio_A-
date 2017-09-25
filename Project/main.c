@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <math.h>
+#include <time.h>
+#include <conio.h>
 #include "Lista.h"
 
 int objY, objX, personX, personY;
@@ -182,6 +184,8 @@ int main(){
                 imprimeCenario(mat,i,j,auxMapa);
             }
     }
+    printf("\n Objetivo encontrado\n");
+    printf("    Pressione qualquer tecla para sair");
     libera_lista(listaAberta);
     libera_lista(listaFechada);
     getche();
