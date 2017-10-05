@@ -61,3 +61,19 @@
 
 1506302781 c:\users\lkogi\testegitmaster\project\lista.h
 
+1507234095 source:c:\users\lkogi\portfolio\a\lista.c
+	<stdio.h>
+	<stdlib.h>
+	"Lista.h"
+
+1507234095 c:\users\lkogi\portfolio\a\lista.h
+
+1507234096 source:c:\users\lkogi\portfolio\a\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<math.h>
+	<time.h>
+	<conio.h>
+	"Lista.h"
+
