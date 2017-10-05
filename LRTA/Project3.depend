@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1506399939 source:c:\users\lkogi\desktop\project3\lista.c
+	<stdio.h>
+	<stdlib.h>
+	"Lista.h"
+
+1506399952 c:\users\lkogi\desktop\project3\lista.h
+
+1507146665 source:c:\users\lkogi\desktop\project\lista.c
+	<stdio.h>
+	<stdlib.h>
+	"Lista.h"
+
+1506399952 c:\users\lkogi\desktop\project\lista.h
+
+1507231673 source:c:\users\lkogi\desktop\project\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<math.h>
+	<time.h>
+	<conio.h>
+	"Lista.h"
+
